@@ -2,6 +2,20 @@
 #include <gtest/gtest.h>
 #include <vector>
 
+TEST(GetMaxConnectedTile, input0) {
+    Solver solver;
+    std::vector<std::vector<int>> input0 = {
+        {1, 2, 1, 2, 3, 3, 1, 3},
+        {2, 2, 1, 3, 2, 1, 3, 1},
+        {1, 3, 1, 3, 1, 3, 3, 3},
+        {3, 1, 3, 3, 3, 1, 2, 2},
+        {2, 3, 2, 2, 2, 3, 3, 1},
+        {3, 2, 2, 4, 2, 3, 1, 1},
+        {1, 3, 2, 3, 1, 1, 1, 2},
+        {3, 1, 2, 1, 2, 2, 3, 1}};
+    EXPECT_EQ(8, solver.getMaxConnectedTile(input0));
+}
+
 TEST(GetMaxConnectedTile, intput1) {
     Solver solver;
     std::vector<std::vector<int>> input1 = {
