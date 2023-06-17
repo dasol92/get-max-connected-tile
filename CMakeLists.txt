@@ -23,6 +23,5 @@ include(CPack)
 
 add_subdirectory(test)
 
-
 include_directories(${CMAKE_SOURCE_DIR}/lib)
 add_executable(max_connected_num main.cpp)
