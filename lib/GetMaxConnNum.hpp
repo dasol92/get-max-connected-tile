@@ -11,9 +11,8 @@ class Solver {
         input = _input;
         n = static_cast<int>(input.size());
         m = static_cast<int>(input.front().size());
-        visited = std::vector<std::vector<int>>(n, std::vector<int>(m, 0));
+        visited = std::vector<std::vector<bool>>(n, std::vector<bool>(m, false));
 
-        maxNumber = input[0][0];
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < m; x++) {
                 if (!visited[y][x]) {
@@ -24,20 +23,21 @@ class Solver {
         }
 
         if (maxCount == 0) {
-            return 0;
+            return maxCount;
         } else {
             return maxCount + 1;
         }
     }
 
+  private:
     void dfs(int y, int x, int target) {
-        visited[y][x] = 1;
+        visited[y][x] = true;
         for (int i = 0; i < NUM_DIRECTIONS; i++) {
-            int ny = y + direction[i][0];
-            int nx = x + direction[i][1];
+            int ny = y + direction[i][Y_COORD];
+            int nx = x + direction[i][X_COORD];
             if (ny < 0 || nx < 0 || ny >= n || nx >= m)
                 continue;
-            if (input[ny][nx] == target && !visited[ny][nx]) {
+            if (!visited[ny][nx] && input[ny][nx] == target) {
                 currCount++;
                 if (currCount > maxCount) {
                     maxCount = currCount;
@@ -48,19 +48,19 @@ class Solver {
     }
 
   private:
-    enum { NUM_DIRECTIONS = 4 };
-    enum { NUM_COORD = 2 };
-    int n, m;
+    static const int NUM_DIRECTIONS = 4;
+    static const int Y_COORD = 0;
+    static const int X_COORD = 1;
+    static const int NUM_COORD = 2;
     int direction[NUM_DIRECTIONS][NUM_COORD] = {
         {-1, 0}, // UP
         {0, 1},  // RIGHT
         {1, 0},  // DOWN
         {0, -1}  // LEFT
     };
-    std::vector<std::vector<int>> visited;
+    std::vector<std::vector<bool>> visited;
     std::vector<std::vector<int>> input;
-
-    int maxNumber;
+    int n, m;
     int maxCount = 0;
     int currCount = 0;
 };
