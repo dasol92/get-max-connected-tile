@@ -2,13 +2,39 @@
 #define GET_MAX_CONN_NUM_HPP
 
 #include <iostream>
+#include <fstream>
 #include <stack>
 #include <vector>
+#include <string>
 
 class Solver {
   public:
-    int getMaxConnectedTile(std::vector<std::vector<int>> _input) {
+    bool readInputFile(std::string filePath) {
+        std::ifstream inputFile(filePath);
+        if (!inputFile.is_open()) {
+            std::cout << "Failed to open " << filePath << '\n';
+            return false;
+        }
+
+        std::string eachLine;
+        while (std::getline(inputFile, eachLine)) {
+            std::vector<int> row;
+            for (char digit : eachLine) {
+                int number = digit - '0'; // char to int
+                row.push_back(number);
+            }
+            input.push_back(row);
+        }
+
+        inputFile.close();
+        return true;
+    }
+
+    void readInputVector(std::vector<std::vector<int>> _input) {
         input = _input;
+    }
+
+    int getMaxConnectedTile() {
         n = static_cast<int>(input.size());
         m = static_cast<int>(input.front().size());
         visited = std::vector<std::vector<bool>>(n, std::vector<bool>(m, false));
